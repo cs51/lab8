@@ -34,9 +34,10 @@ type the intervals are over, you'll want some common basic operations:
 constructing an interval, checking if an interval is empty, checking
 if a point is contained within an interval, and intersecting two
 intervals. (Of course, in an actual interval library, you'd want
-several other operations as well, but this will get us started.)
+several other operations as well, but this will be enough to get us
+started.)
 
-Let’s examine how we can build a *generic* interval library using
+Let's examine how we can build a *generic* interval library using
 functors.
 
 An interval is defined by its endpoints. In order to operate on
@@ -117,8 +118,8 @@ module MakeInterval (Endpoint : ORDERED_TYPE) =
     end ;;
 
 (*......................................................................
-Exercise 1B: Using the completed functor above, instantiate an integer
-interval module.
+Exercise 1B: Using the completed functor above, instantiate an
+*integer* interval module.
 ......................................................................*)
 
 module IntInterval = struct end ;;
@@ -171,10 +172,11 @@ module type INTERVAL =
   end ;;
 
 (*......................................................................
-Exercise 2B: Define the MakeSafeInterval functor using MakeInterval as
-a starting point, such that it returns a module restricted to the
-INTERVAL signature. (Much of the implementation can be copied from
-MakeInterval above.) **Don't forget to specify the module type.**
+Exercise 2B: Define the `MakeSafeInterval` functor using the code you
+wrote for `MakeInterval` as a starting point, such that it returns a
+module restricted to the `INTERVAL` signature. (Much of the
+implementation can be copied from `MakeInterval` above.) **Don't
+forget to specify the module type.**
 ......................................................................*)
 
 module MakeSafeInterval (Endpoint : ORDERED_TYPE) =
@@ -233,10 +235,14 @@ endpoint is equal to Endpoint.t. The functor can then be used to
 create interval modules of various types without duplicating code. *)
 
 (*......................................................................
-Exercise 3A: Define a new functor MakeBestInterval. It should take an
+Exercise 3A: Define a new functor `MakeBestInterval`. It should take an
 ORDERED_TYPE module for the endpoints of the intervals, and return a
 module satisfying INTERVAL *with appropriate sharing constraints
 to allow the creation of generic interval modules*.
+
+If you do this correctly, your code for `MakeBestInterval` should be
+almost identical to your code for `MakeSafeInterval` with the
+exception of any needed sharing constraints.
 ......................................................................*)
 
 (* ... place your implementation of the MakeBestInterval functor here ... *)
@@ -246,8 +252,9 @@ modules of whatever type we want, with the appropriate abstraction
 level.
 
 ........................................................................
-Exercise 3B: Use the MakeBestInterval functor to create a new int
-interval module, and test that it works as expected.
+Exercise 3B: Use the `MakeBestInterval` functor to create a new int
+interval module called `IntBestInterval`, and test that it works as
+expected.
 
 You may for instance want to try the problematic lines from Exercise 1C.
 
